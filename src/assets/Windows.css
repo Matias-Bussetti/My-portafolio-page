@@ -1,6 +1,89 @@
-.window-studies {
-  color: #eee;
+main .window {
+  width: 200px;
+  height: 100px;
+  position: absolute;
+  border-radius: 5px 5px 0 0;
+  overflow: hidden;
 }
+main .window.show {
+  display: block;
+}
+main .window.hide {
+  display: none;
+}
+main .window .top-bar {
+  background-color: #d9d9d9;
+  height: 40px;
+  width: 100%;
+  cursor: move;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  padding: 0 5px;
+}
+main .window .top-bar .app-title {
+  position: absolute;
+  top: 0px;
+  left: 50%;
+  transform: translateX(-50%);
+  height: 40px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+main .window .top-bar .app-title h2 {
+  font-size: 20px;
+  color: #524945;
+}
+main .window .top-bar button.close {
+  margin: 0 5px;
+  border: none;
+  border-radius: 50%;
+  height: 20px;
+  width: 20px;
+  cursor: pointer;
+  background-color: #92b372;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+main .window .top-bar button.close span.material-symbols-outlined {
+  color: #d9d9d9;
+  font-size: 15px;
+  text-align: center;
+  transform: translateX(0%) translateY(5%);
+}
+main .window .window-spand-btn {
+  transform: rotate(-45deg) translateX(20%) translateY(50%);
+  background-color: #b3b3b3;
+  border: none;
+  width: 40px;
+  height: 20px;
+  position: absolute;
+  bottom: 0px;
+  right: 0px;
+  cursor: se-resize;
+}
+main .window .content-container {
+  background-color: #ffffff;
+  padding: 15px 15px 45px 15px;
+  width: 100%;
+  height: calc(100% - 40px);
+  overflow: auto;
+}
+main .window .bottom-bar {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  background-color: #d9d9d9;
+  height: 30px;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  padding: 0 5px;
+}
+
 .window-studies h2 {
   font-size: 28px;
 }
@@ -29,9 +112,6 @@
 .window-studies ul li h3 span.italic {
   font-style: italic;
 }
-.window-studies ul li h3 span.s-md {
-  font-size: 16px;
-}
 .window-studies ul li .info {
   margin: 10px;
 }
@@ -53,15 +133,28 @@
   padding: 5px;
 }
 .window-studies ul li .info details ul li {
-  height: 26px;
+  margin: 5px 0;
+  min-height: 26px;
   display: flex;
   justify-content: space-between;
   align-items: center;
+}
+.window-studies ul li .info details ul li span:first-of-type {
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
 }
 .window-studies ul li .info details ul li span:hover + span {
   color: #3ccf48;
   font-style: italic;
   font-size: 24px;
+}
+
+@media screen and (max-width: 600px) {
+  .window-studies ul li h3 {
+    font-size: 14px;
+  }
+  .window-studies ul li .info details ul li span:first-of-type {
+    font-size: 14px;
+  }
 }
 
 /*# sourceMappingURL=Windows.css.map */

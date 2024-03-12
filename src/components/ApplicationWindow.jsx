@@ -1,4 +1,5 @@
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
+import { usePositionAndSize } from "../hooks/usePositionAndSize";
 
 const ApplicationWindow = ({
   name,
@@ -7,194 +8,83 @@ const ApplicationWindow = ({
   children,
 }) => {
   const [showWindow, setShowWindow] = useState(false);
-  function closeWindow() {
+
+  const isClosing = useRef(false);
+
+  function closeWindow(e) {
     setShowWindow(false);
+    isClosing.current = true;
+    setTimeout(() => {
+      handlePosition.onClose(e);
+      handleSize.onClose(e);
+      isClosing.current = false;
+    }, 500);
   }
+
   function openWindow() {
-    setShowWindow(true);
-  }
-  const [onMouseDown, setOnMouseDown] = useState(false);
-  const [windowPosition, setWindowPosition] = useState({
-    x: startPostion.x,
-    y: startPostion.x,
-  });
-  const initialClickPosition = useRef({
-    x: 0,
-    y: 0,
-  });
-
-  function handleWindowPosMouseDown(e) {
-    setOnMouseDown(true);
-    const rect = windowContainer.current.getBoundingClientRect();
-    initialClickPosition.current = {
-      x: e.clientX - rect.left,
-      y: e.clientY - rect.top,
-    };
-  }
-  function handleWindowPosOnMouseUp(e) {
-    setOnMouseDown(false);
-  }
-  function handleWindowPosMouseMove(e) {
-    if (onMouseDown) {
-      const rect = windowContainer.current.getBoundingClientRect();
-
-      const newX = e.clientX - initialClickPosition.current.x;
-      const newY = e.clientY - initialClickPosition.current.y;
-
-      setWindowPosition({
-        x: newX,
-        y: newY,
-      });
+    if (!isClosing.current) {
+      setTimeout(() => {
+        setShowWindow(true);
+      }, Math.floor(Math.random() * 1000));
     }
   }
 
-  function handleWidowPosOnTouchEnd(e) {
-    setOnMouseDown(false);
-  }
-  function handleWidowPosOnTouchMove(e) {
-    if (onMouseDown) {
-      const rect = windowContainer.current.getBoundingClientRect();
-
-      const newX = e.touches[0].clientX - initialClickPosition.current.x;
-      const newY = e.touches[0].clientY - initialClickPosition.current.y;
-
-      setWindowPosition({
-        x: newX,
-        y: newY,
-      });
-    }
-  }
-  function handleWidowPosOnTouchStart(e) {
-    setOnMouseDown(true);
-    const rect = windowContainer.current.getBoundingClientRect();
-    initialClickPosition.current = {
-      x: e.touches[0].clientX - rect.left,
-      y: e.touches[0].clientY - rect.top,
-    };
+  function expandWindow(e) {
+    handlePosition.onFullScreen(e);
+    handleSize.onFullScreen(e);
   }
 
-  //Spand Window
-  const [onSpandMouseDown, setSpandOnMouseDown] = useState(false);
-  const [windowSize, setWindowSize] = useState({
-    w: startSize.w,
-    h: startSize.h,
-  });
+  const { container, position, handlePosition, size, handleSize } =
+    usePositionAndSize(startPostion, startSize);
 
-  const initialWindowSize = useRef({
-    w: 200,
-    h: 100,
-  });
-
-  function handleWindowSpandMouseDown(e) {
-    setSpandOnMouseDown(true);
-    const rect = windowContainer.current.getBoundingClientRect();
-    initialClickPosition.current = {
-      x: e.clientX,
-      y: e.clientY,
-    };
-    initialWindowSize.current = { w: windowSize.w, h: windowSize.h };
-  }
-  function handleWindowSpandOnMouseUp(e) {
-    setSpandOnMouseDown(false);
-  }
-  function handleWindowSpandMouseMove(e) {
-    if (onSpandMouseDown) {
-      const newW =
-        initialWindowSize.current.w +
-        e.clientX -
-        initialClickPosition.current.x;
-      const newH =
-        initialWindowSize.current.h +
-        e.clientY -
-        initialClickPosition.current.y;
-
-      setWindowSize({
-        w: newW,
-        h: newH,
-      });
-    }
-  }
-
-  function handleWindowSpandOnTouchStart(e) {
-    setSpandOnMouseDown(true);
-    const rect = windowContainer.current.getBoundingClientRect();
-    initialClickPosition.current = {
-      x: e.touches[0].clientX,
-      y: e.touches[0].clientY,
-    };
-    initialWindowSize.current = { w: windowSize.w, h: windowSize.h };
-  }
-  function handleWindowSpandOnTouchEnd(e) {
-    setSpandOnMouseDown(false);
-  }
-  function handleWindowSpandOnTouchMove(e) {
-    if (onSpandMouseDown) {
-      const newW =
-        initialWindowSize.current.w +
-        e.touches[0].clientX -
-        initialClickPosition.current.x;
-      const newH =
-        initialWindowSize.current.h +
-        e.touches[0].clientY -
-        initialClickPosition.current.y;
-
-      console.log(
-        {
-          w: newW,
-          h: newH,
-        },
-        e.touches[0].clientX,
-        e.touches[0].clientY,
-        initialClickPosition.current,
-        initialWindowSize.current
-      );
-      setWindowSize({
-        w: newW,
-        h: newH,
-      });
-    }
-  }
-
-  const windowContainer = useRef(null);
   return (
     <>
       <button onClick={openWindow}>{name}</button>
 
       <div
-        ref={windowContainer}
+        ref={container}
         className={`window ${showWindow ? "show" : "hide"}`}
         style={{
-          top: windowPosition.y + "px",
-          left: windowPosition.x + "px",
+          left: position.x + "px",
+          top: position.y + "px",
 
-          width: windowSize.w + "px",
-          height: windowSize.h + "px",
+          width: size.w + "px",
+          height: size.h + "px",
         }}
       >
         <div
           className="top-bar"
-          onMouseDown={handleWindowPosMouseDown}
-          onMouseMove={handleWindowPosMouseMove}
-          onMouseLeave={handleWindowPosOnMouseUp}
-          onMouseUp={handleWindowPosOnMouseUp}
-          onTouchEnd={handleWidowPosOnTouchEnd}
-          onTouchMove={handleWidowPosOnTouchMove}
-          onTouchStart={handleWidowPosOnTouchStart}
+          onMouseDown={handlePosition.onMouseDown}
+          onMouseMove={handlePosition.onMouseMove}
+          onMouseUp={handlePosition.onMouseUp}
+          onMouseLeave={handlePosition.onMouseUp}
+          onTouchStart={handlePosition.onTouchStart}
+          onTouchMove={handlePosition.onTouchMove}
+          onTouchEnd={handlePosition.onTouchEnd}
         >
-          <button className="close" onClick={closeWindow}></button>
+          <div className="app-title">
+            <h2>{name}</h2>
+          </div>
+          <button className="close" onClick={expandWindow}>
+            <span className="material-symbols-outlined">open_in_full</span>
+          </button>
+          <button className="close" onClick={closeWindow}>
+            <span className="material-symbols-outlined">close</span>
+          </button>
         </div>
-        <div className="content-container">{children}</div>
-
+        <div className="content-container">
+          {children}
+          <div className="bottom-bar"></div>
+        </div>
         <button
           className="window-spand-btn"
-          onMouseDown={handleWindowSpandMouseDown}
-          onMouseMove={handleWindowSpandMouseMove}
-          onMouseLeave={handleWindowSpandOnMouseUp}
-          onMouseUp={handleWindowSpandOnMouseUp}
-          onTouchEnd={handleWindowSpandOnTouchEnd}
-          onTouchMove={handleWindowSpandOnTouchMove}
-          onTouchMoveCapture={handleWindowSpandOnTouchMove}
-          onTouchStart={handleWindowSpandOnTouchStart}
+          onMouseDown={handleSize.onMouseDown}
+          onMouseMove={handleSize.onMouseMove}
+          onMouseUp={handleSize.onMouseUp}
+          onMouseLeave={handleSize.onMouseUp}
+          onTouchStart={handleSize.onTouchStart}
+          onTouchMove={handleSize.onTouchMove}
+          onTouchEnd={handleSize.onTouchEnd}
         ></button>
       </div>
     </>
