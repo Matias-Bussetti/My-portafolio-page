@@ -1,0 +1,67 @@
+.window-studies {
+  color: #eee;
+}
+.window-studies h2 {
+  font-size: 28px;
+}
+.window-studies hr {
+  margin: 10px 0;
+}
+.window-studies ul {
+  list-style: none;
+}
+.window-studies ul li {
+  margin-bottom: 10px;
+}
+.window-studies ul li h3 {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.window-studies ul li h3 span.elipsis {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.window-studies ul li h3 span.no-warp {
+  white-space: nowrap;
+}
+.window-studies ul li h3 span.italic {
+  font-style: italic;
+}
+.window-studies ul li h3 span.s-md {
+  font-size: 16px;
+}
+.window-studies ul li .info {
+  margin: 10px;
+}
+.window-studies ul li .info h5 {
+  margin: 5px 0;
+}
+.window-studies ul li .info ul {
+  margin: 5px 10px;
+}
+.window-studies ul li .info details {
+  margin: 10px 0;
+  padding: 0 0 0 10px;
+  border-left: 2px solid #7c7c7c;
+}
+.window-studies ul li .info details summary {
+  cursor: pointer;
+}
+.window-studies ul li .info details ul {
+  padding: 5px;
+}
+.window-studies ul li .info details ul li {
+  height: 26px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.window-studies ul li .info details ul li span:hover + span {
+  color: #3ccf48;
+  font-style: italic;
+  font-size: 24px;
+}
+
+/*# sourceMappingURL=Windows.css.map */

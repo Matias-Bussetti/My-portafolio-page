@@ -1,0 +1,71 @@
+.window-studies{
+    color: #eee;
+    h2{font-size: 28px;}
+    hr{
+        margin: 10px 0;
+    }
+    ul{
+        list-style: none;
+
+        li{
+            margin-bottom: 10px;
+
+            h3{
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+
+                span{
+                    &.elipsis{
+                        white-space: nowrap;
+                        overflow: hidden;
+                        text-overflow: ellipsis;
+                    }
+                    &.no-warp{
+                        white-space: nowrap;
+                    }
+                    &.italic{
+                        font-style: italic;
+                    }
+                    &.s-md{
+                        font-size: 16px;
+                    }
+                }
+
+
+            }
+            .info{
+                margin: 10px;
+                h5{
+                    margin: 5px 0;
+                }
+                ul{
+                    margin:5px 10px;
+                }
+                details{
+                    margin: 10px 0;
+                    padding: 0 0 0 10px;
+                    border-left: 2px solid #7c7c7c;
+                    summary{
+                        cursor: pointer;
+                    }
+                    ul{
+                        padding: 5px;
+                        li{
+                            height: 26px;
+                            display: flex;
+                            justify-content: space-between;
+                            align-items: center;
+
+                            span:hover + span{
+                                color: #3ccf48;
+                                font-style:italic;
+                                font-size: 24px;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
