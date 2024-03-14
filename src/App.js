@@ -3,6 +3,7 @@ import Nav from "./page/Nav";
 import Main from "./page/Main";
 import { useState } from "react";
 import Footer from "./page/Footer";
+import { ProvideAppsRegistered } from "./context/useAppRegisted";
 
 function App() {
   const [showNav, setShowNav] = useState(false);
@@ -16,12 +17,14 @@ function App() {
   }
 
   return (
-    <div className="os">
-      <Nav show={showNav} handleShowNav={handleShowNav} />
-      <Main />
+    <ProvideAppsRegistered>
+      <div className="os">
+        <Nav show={showNav} handleShowNav={handleShowNav} />
+        <Main />
 
-      <Footer handleShowNav={handleShowNav} />
-    </div>
+        <Footer handleShowNav={handleShowNav} />
+      </div>
+    </ProvideAppsRegistered>
   );
 }
 

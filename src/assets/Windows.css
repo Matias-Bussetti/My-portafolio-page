@@ -5,10 +5,13 @@ main .window {
   border-radius: 5px 5px 0 0;
   overflow: hidden;
 }
-main .window.show {
+main .window.open {
   display: block;
 }
-main .window.hide {
+main .window.close {
+  display: none;
+}
+main .window.minimized {
   display: none;
 }
 main .window .top-bar {

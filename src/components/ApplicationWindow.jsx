@@ -1,17 +1,23 @@
 import { useEffect, useRef, useState } from "react";
 import { usePositionAndSize } from "../hooks/usePositionAndSize";
+import { useAppsRegistered } from "../context/useAppRegisted";
 
 const ApplicationWindow = ({
+  id,
   name,
   startPostion = { x: 10, y: 10 },
   startSize = { w: 200, h: 100 },
   children,
 }) => {
+  const { registerApp, updateAppOpenStatus } = useAppsRegistered();
+
   const [showWindow, setShowWindow] = useState(false);
+  const [isMinimize, setIsMinimize] = useState(false);
 
   const isClosing = useRef(false);
 
   function closeWindow(e) {
+    setIsMinimize(false);
     setShowWindow(false);
     isClosing.current = true;
     setTimeout(() => {
@@ -22,11 +28,16 @@ const ApplicationWindow = ({
   }
 
   function openWindow() {
+    setIsMinimize(false);
     if (!isClosing.current) {
       setTimeout(() => {
         setShowWindow(true);
       }, Math.floor(Math.random() * 1000));
     }
+  }
+
+  function minimizeWindow() {
+    setIsMinimize(true);
   }
 
   function expandWindow(e) {
@@ -37,13 +48,30 @@ const ApplicationWindow = ({
   const { container, position, handlePosition, size, handleSize } =
     usePositionAndSize(startPostion, startSize);
 
+  useEffect(() => {
+    registerApp({
+      id: id,
+      name: name,
+      isOpen: showWindow,
+      handleClose: closeWindow,
+      handleOpen: openWindow,
+      handleMinimize: minimizeWindow,
+    });
+  }, []);
+
+  useEffect(() => {
+    updateAppOpenStatus(id, showWindow);
+  }, [showWindow]);
+
   return (
     <>
       <button onClick={openWindow}>{name}</button>
 
       <div
         ref={container}
-        className={`window ${showWindow ? "show" : "hide"}`}
+        className={`window ${showWindow ? "open" : "close"} ${
+          isMinimize ? "minimized" : ""
+        }`}
         style={{
           left: position.x + "px",
           top: position.y + "px",
@@ -65,6 +93,9 @@ const ApplicationWindow = ({
           <div className="app-title">
             <h2>{name}</h2>
           </div>
+          <button className="close" onClick={minimizeWindow}>
+            <span className="material-symbols-outlined">minimize</span>
+          </button>
           <button className="close" onClick={expandWindow}>
             <span className="material-symbols-outlined">open_in_full</span>
           </button>
