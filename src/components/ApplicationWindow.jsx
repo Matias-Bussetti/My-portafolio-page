@@ -37,7 +37,7 @@ const ApplicationWindow = ({
   }
 
   function minimizeWindow() {
-    setIsMinimize(true);
+    setIsMinimize((p) => !p);
   }
 
   function expandWindow(e) {

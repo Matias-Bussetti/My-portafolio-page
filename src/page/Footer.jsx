@@ -15,7 +15,10 @@ const Footer = ({ handleShowNav }) => {
       {apps
         .filter((app) => app.isOpen)
         .map((app) => (
-          <button key={app.id} onClick={() => handle.openApp(app.handleOpen)}>
+          <button
+            key={app.id}
+            onClick={() => handle.openApp(app.handleMinimize)}
+          >
             {app.name}
           </button>
         ))}

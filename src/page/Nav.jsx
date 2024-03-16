@@ -16,14 +16,17 @@ const Nav = ({ show, handleShowNav }) => {
       className={show ? "show" : "hide"}
     >
       <div className="start-menu" onClick={(e) => e.stopPropagation()}>
-        {JSON.stringify(apps)}
-        <ul>
+        <menu className="side-panel"></menu>
+        <search>
+          <input />
+        </search>
+        <menu className="apps-menu">
           {apps.map((app) => (
             <li key={app.id} onClick={() => handle.openApp(app.handleOpen)}>
               {app.name}
             </li>
           ))}
-        </ul>
+        </menu>
       </div>
     </nav>
   );

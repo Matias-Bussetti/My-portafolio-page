@@ -43,12 +43,19 @@ html {
 .os nav .start-menu {
   z-index: 10;
   position: absolute;
-  width: 400px;
   max-width: 99vw;
-  background: #f00;
-  height: 600px;
+  background: #2e2e2e;
+  width: 610px;
+  height: 500px;
   left: 0px;
   bottom: 75px;
+  display: flex;
+  flex-direction: row;
+}
+.os nav .start-menu menu.side-panel {
+  width: 80px;
+  height: 470px;
+  background-color: #333333;
 }
 .os footer {
   z-index: 10;
