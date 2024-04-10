@@ -1,9 +1,17 @@
-import React from 'react'
+import React from "react";
+import { BrowserRouter, Routes, Route, Link } from "react-router-dom";
 
 const Explorer = () => {
   return (
-    <iframe src='/folder.html' />
-  )
-}
+    <BrowserRouter>
+    <Link to="/">home</Link>
+    <Link to="/a">a</Link>
+      <Routes>
+        <Route path="/" element={<p>/</p>} /> {/* 👈 Renders at /app/ */}
+        <Route path="/a" element={<p>/a</p>} /> {/* 👈 Renders at /app/ */}
+      </Routes>
+    </BrowserRouter>
+  );
+};
 
-export default Explorer
+export default Explorer;

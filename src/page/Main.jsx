@@ -28,7 +28,7 @@ const Main = () => {
         startPostion={{ x: 50, y: 50 }}
         startSize={{ w: 300, h: 450 }}
       >
-        <Studies />
+        <Explorer />
       </ApplicationWindow>
     </main>
   );
