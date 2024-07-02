@@ -89,6 +89,7 @@ const ApplicationWindow = ({
           onTouchStart={handlePosition.onTouchStart}
           onTouchMove={handlePosition.onTouchMove}
           onTouchEnd={handlePosition.onTouchEnd}
+          onDoubleClick={expandWindow}
         >
           <div className="app-title">
             <h2>{name}</h2>
@@ -112,7 +113,7 @@ const ApplicationWindow = ({
           onMouseDown={handleSize.onMouseDown}
           onMouseMove={handleSize.onMouseMove}
           onMouseUp={handleSize.onMouseUp}
-          onMouseLeave={handleSize.onMouseUp}
+          //onMouseLeave={handleSize.onMouseUp}
           onTouchStart={handleSize.onTouchStart}
           onTouchMove={handleSize.onTouchMove}
           onTouchEnd={handleSize.onTouchEnd}
