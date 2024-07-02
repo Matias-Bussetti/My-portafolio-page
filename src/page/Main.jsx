@@ -1,4 +1,5 @@
 import ApplicationWindow from "../components/ApplicationWindow";
+import Explorer from "../components/windows/Explorer";
 import Studies from "../components/windows/Studies";
 import { ProvideAppsRegistered } from "../context/useAppRegisted";
 
@@ -19,7 +20,7 @@ const Main = () => {
         startPostion={{ x: 50, y: 50 }}
         startSize={{ w: 300, h: 450 }}
       >
-        <Studies />
+        <Explorer />
       </ApplicationWindow>
       <ApplicationWindow
         id={3}
@@ -27,7 +28,7 @@ const Main = () => {
         startPostion={{ x: 50, y: 50 }}
         startSize={{ w: 300, h: 450 }}
       >
-        <Studies />
+        <Explorer />
       </ApplicationWindow>
     </main>
   );
